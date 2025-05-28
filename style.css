@@ -4,10 +4,45 @@
     box-sizing: border-box;
 }
 
-body{
-    background-image: radial-gradient(rgb(14, 79, 4),rgb(16, 92, 5));
+#content{
+    height: 100vh;
+    background-image: radial-gradient(rgb(0, 156, 2),rgb(2, 105, 3));
+}
+
+#title{
+    position: absolute;
+    top: -2vh;
+    left: 1vw;
+    height: 30vh;
 }
 
 button{
-    width: 20%;
+    height: 10vh;
+    width: 10vw;
+}
+
+#buttons{
+    position: absolute;
+    bottom: 5vh;
+    left: 37vw;
+
+}
+
+#dealer{
+    position: absolute;
+    top: 10vh;
+    left: 42vw;
+    height: 30vh;
+    width: 20vh;
+    outline: yellow solid 5px;
+}
+
+#kartyak{
+    position: absolute;
+    bottom: 20vh;
+    left: 42vw;
+    height: 30vh;
+    width: 20vh;
+    outline: white solid 5px;
+
 }
