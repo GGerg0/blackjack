@@ -68,11 +68,11 @@ function startGame(){
 
     player.addCard(Kiosztas());
     player.addCard(Kiosztas());
-    if(player.getScore() === 21){alert("Nyertél!"); startGame()}
+    if(player.getScore() === 21){alert("Nyertél 21-el!"); startGame()}
     
     dealer.addCard(Kiosztas());
     dealer.addCard(Kiosztas());
-    if(dealer.getScore() === 21){alert("Dealer nyert!"); startGame()}
+    if(dealer.getScore() === 21){alert("Dealer nyert 21-el!"); startGame()}
 
     updateScores();
 }
@@ -82,7 +82,7 @@ hit.addEventListener("click", () => {
     updateScores();
 
     if (player.getScore() === 21) {
-        alert("Nyertél!");
+        alert("Nyertél 21-el!");
         startGame();
     } 
     else if (player.getScore() > 21) {
