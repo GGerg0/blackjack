@@ -9,8 +9,12 @@
     background-image: radial-gradient(rgb(0, 156, 2),rgb(2, 105, 3));
 }
 
+#content > div, #content > button{
+position: absolute;
+}
+
 #title{
-    position: absolute;
+    
     top: -2vh;
     left: 1vw;
     height: 30vh;
@@ -19,17 +23,19 @@
 button{
     height: 10vh;
     width: 10vw;
+
 }
 
+
 #buttons{
-    position: absolute;
+
     bottom: 5vh;
     left: 37vw;
 
 }
 
 #dealer{
-    position: absolute;
+
     top: 10vh;
     left: 42vw;
     height: 30vh;
@@ -38,11 +44,25 @@ button{
 }
 
 #kartyak{
-    position: absolute;
+
     bottom: 20vh;
     left: 42vw;
     height: 30vh;
     width: 20vh;
     outline: white solid 5px;
 
+}
+
+#start{
+    left: 10vw;
+    top: 50vh
+}
+
+#deck{
+
+    top: 35vh;
+    right: 10vw;
+    height: 30vh;
+    width: 20vh;
+    outline: lightgrey solid 5px;
 }
