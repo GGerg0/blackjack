@@ -1,68 +1,85 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#content{
-    height: 100vh;
-    background-image: radial-gradient(rgb(0, 156, 2),rgb(2, 105, 3));
+#content {
+  height: 100vh;
+  background-image: radial-gradient(rgb(0, 156, 2), rgb(2, 105, 3));
 }
 
-#content > div, #content > button{
-position: absolute;
+#content > div,
+#content > button {
+  position: absolute;
 }
 
-#title{
-    
-    top: -2vh;
-    left: 1vw;
-    height: 30vh;
+#title {
+  position: absolute;
+  top: -2vh;
+  left: 1vw;
+  height: 30vh;
 }
 
-button{
-    height: 10vh;
-    width: 10vw;
-
+button {
+  height: 10vh;
+  width: 10vw;
 }
 
-
-#buttons{
-
-    bottom: 5vh;
-    left: 37vw;
-
+#buttons {
+  bottom: 5vh;
+  left: 37vw;
 }
 
-#dealer{
-
-    top: 10vh;
-    left: 42vw;
-    height: 30vh;
-    width: 20vh;
-    outline: yellow solid 5px;
+#dealer {
+  top: 10vh;
+  left: 42vw;
+  height: 30vh;
+  width: 20vh;
+  outline: yellow solid 5px;
 }
 
-#kartyak{
-
-    bottom: 20vh;
-    left: 42vw;
-    height: 30vh;
-    width: 20vh;
-    outline: white solid 5px;
-
+#player {
+  bottom: 20vh;
+  left: 42vw;
+  height: 30vh;
+  width: 20vh;
+  outline: white solid 5px;
 }
 
-#start{
-    left: 10vw;
-    top: 50vh
+#start {
+  left: 10vw;
+  top: 50vh;
 }
 
-#deck{
+#deck {
+  top: 35vh;
+  right: 10vw;
+  height: 30vh;
+  width: 20vh;
+  outline: lightgrey solid 5px;
+  background-color: aliceblue;
+  padding-top: 5%;
+  font-size: 48px;
+  text-align: center;
+}
 
-    top: 35vh;
-    right: 10vw;
-    height: 30vh;
-    width: 20vh;
-    outline: lightgrey solid 5px;
+#dealer > div,
+#player > div {
+  position: absolute;
+  height: 30vh;
+  width: 20vh;
+  background-color: aliceblue;
+  outline: gray solid 5px;
+  padding-top: 60%;
+  font-size: 48px;
+  text-align: center;
+}
+
+#dealer > div:first-child {
+  position: absolute;
+  left: 10vw;
+  height: 30vh;
+  width: 20vh;
+  background-color: aliceblue;
 }
