@@ -108,3 +108,12 @@ img[src = "shh.png"]
 {
   width: 100%;
 }
+
+#ASelection{
+  position: absolute;
+  left: 30vw;
+  top: 20vh;
+  background-color: aliceblue;
+  padding: 2%;
+  outline: red ridge 10px;
+}

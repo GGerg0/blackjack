@@ -12,13 +12,18 @@ const EndDiv = document.getElementById("endresult");
 const content = document.querySelectorAll("#content>:not(#endresult)");
 const playerText = document.querySelector("#player~p");
 const resetButton = document.getElementById("reset");
+const APage = document.getElementById("ASelection");
+const AOneButton = document.querySelector("#ASelection>button:first-of-type");
+const ATenButton = document.querySelector("#ASelection>button:last-child");
+
 let playerValue = 0;
 let dealerValue = 0;
 
 let dealer = [];
 let player = [];
 let stand = false;
-resetButton.style.display = "none"
+resetButton.style.display = "none";
+APage.style.display = "none";
 
 //Egy kártya valós értéke
 function CardValue(c) {
@@ -53,9 +58,10 @@ function GameReset() {
   playerDiv.style.transform = `translate(0vw)`;
   playerDiv.innerHTML = ``;
   dealerDiv.innerHTML = ``;
-  resetButton.style.display = "none"
-  startButton.style.display = "inline-block"
+  resetButton.style.display = "none";
+  startButton.style.display = "inline-block";
   deckDiv.innerHTML = deckCOunt;
+  APage.style.display = "none";
 }
 
 //Kártya elrendezés
@@ -82,7 +88,7 @@ function CheckBust(value) {
 
 //Játék vége
 function EndGame() {
-  if (CheckBust(playerValue)) {
+  if (CheckBust(playerValue) || (playerValue < 17 && stand == true)) {
     HideButtons();
     EndDiv.style.display = "block";
     EndDiv.innerHTML = `<h1>Dealer nyert!</h1>`;
@@ -145,8 +151,8 @@ function Wait(sec) {
   }
 }
 //random szám
-function RandomNumber(max){
-  return parseInt(Math.floor(Math.random() * max))
+function RandomNumber(max) {
+  return parseInt(Math.floor(Math.random() * max));
 }
 
 //Kártya osztás egy embernek
@@ -178,35 +184,35 @@ function DealingV2() {
 //player kártyaosztás
 function PlayerDealing() {
   player[player.length] = DealingV2();
-  playerDiv.innerHTML += `<div>${player[player.length - 1]}</div>`;
-  CardLayout();
-  deckCOunt -= 1;
-  playerValue += CardValue(player[player.length - 1]);
-  deckDiv.innerHTML = deckCOunt;
+    playerDiv.innerHTML += `<div>${player[player.length - 1]}</div>`;
+    CardLayout();
+    deckCOunt -= 1;
+    playerValue += CardValue(player[player.length - 1]);
+    deckDiv.innerHTML = deckCOunt;
 }
 
 //dealer kártyaosztás
 function DealerDealing() {
-      dealer[dealer.length] = DealingV2();
-    dealerDiv.innerHTML += `<div>${
-      dealer.length == 1
-        ? dealer[dealer.length - 1]
-        : `<img src="shh.png" alt= "shhhh">`
-    }</div>`;
-    dealerValue += CardValue(dealer[dealer.length - 1]);
-    deckCOunt -= 1;
+  dealer[dealer.length] = DealingV2();
+  dealerDiv.innerHTML += `<div>${
+    dealer.length == 1
+      ? dealer[dealer.length - 1]
+      : `<img src="shh.png" alt= "shhhh">`
+  }</div>`;
+  dealerValue += CardValue(dealer[dealer.length - 1]);
+  deckCOunt -= 1;
 }
 
 //egy kör functionje
 function PlayerRound() {
   if (deck.some(CheckDeck)) {
-    PlayerDealing()
+    PlayerDealing();
     console.log(playerValue);
     console.log(player);
   } else {
     console.log("Üres a pakli");
   }
-  
+
   console.log(deck);
   EndGame();
 }
@@ -244,6 +250,26 @@ standButton.addEventListener("click", () => {
   DealerRound();
 });
 //reset
-resetButton.addEventListener("click", ()=> {
+resetButton.addEventListener("click", () => {
   GameReset();
-})
+});
+
+AOneButton.addEventListener("click", () => {
+  player[player.length] = 1;
+  playerDiv.innerHTML += `<div>${player[player.length - 1]}</div>`;
+  CardLayout();
+  deckCOunt -= 1;
+  playerValue += CardValue(player[player.length - 1]);
+  deckDiv.innerHTML = deckCOunt;
+  EndGame();
+});
+
+ATenButton.addEventListener("click", () => {
+  player[player.length] = 10;
+  playerDiv.innerHTML += `<div>${player[player.length - 1]}</div>`;
+  CardLayout();
+  deckCOunt -= 1;
+  playerValue += CardValue(player[player.length - 1]);
+  deckDiv.innerHTML = deckCOunt;
+  EndGame();
+});
