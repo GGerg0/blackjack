@@ -11,16 +11,17 @@ const deckDiv = document.getElementById("deck");
 const startButton = document.getElementById("start");
 const playerDiv = document.getElementById("player");
 const dealerDiv = document.getElementById("dealer");
+const EndDiv = document.getElementById("endresult");
+const content = document.querySelectorAll("#content>:not(#endresult)");
+const playerText = document.querySelector("#player~p");
 let playerValue = 0;
 let dealerValue = 0;
-
-standButton.style.display = "none";
-hitButton.style.display = "none";
 
 let dealer = [];
 let player = [];
 let stand = false;
 
+//Egy kártya valós értéke
 function CardValue(c) {
   switch (c) {
     case "J":
@@ -29,7 +30,7 @@ function CardValue(c) {
     case "Q":
       return 10;
       break;
-    case "Q":
+    case "K":
       return 10;
       break;
     case "A":
@@ -40,29 +41,77 @@ function CardValue(c) {
   }
 }
 
+//Alap értékek beállítása
+function GameReset() {
+  deck = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4];
+  deckCOunt = 56;
+  playerValue = 0;
+  dealerValue = 0;
+  dealer = [];
+  player = [];
+  EndDiv.style.display = "none";
+  playerDiv.style.transform = `translate(0vw)`
+  playerDiv.innerHTML=``
 
+}
 
-function checkBust(value)
+//Kártya elrendezés
+function CardLayout()
 {
-  if (value > 21)
-  {
-    return true
-  }
-  else{
-    return false
+  const cards = document.querySelectorAll("#player>div")
+  let counter = 0
+
+  playerDiv.style.transform = `translate(-${(cards.length-1)/2*10}vw)`
+
+  cards.forEach(c => {
+    c.style.transform = `translate(${(counter)*10}vw)`
+    counter++
+  })
+}
+
+
+//túllépés ellenőrzése
+function CheckBust(value) {
+  if (value > 21) {
+    return true;
+  } else {
+    return false;
   }
 }
 
-function endGame(){
-  if (checkBust(playerValue) || checkBust(dealerValue))
-  {
+//Játék vége
+function EndGame() {
+  if (CheckBust(playerValue) || dealerDiv == 21) {
+    HideButtons();
+    EndDiv.style.display = "block";
+    EndDiv.innerHTML = `<h1>Dealer nyert!</h1>`;
+    startButton.style.display = "inline-block";
+  }
 
+  if (CheckBust(dealerValue) || playerValue == 21) {
+    HideButtons();
+    EndDiv.style.display = "block";
+    EndDiv.innerHTML = `<h1>Játékos nyert!</h1>`;
+    startButton.style.display = "inline-block";
   }
 }
 
-function EnableButtons() {
+//játék elemek elrejtése
+function HideGame() {
+  content.forEach((e) => {
+    e.style.display = "none";
+  });
+}
+
+//vezérl gobmbok megejelenítése
+function ShowButtons() {
   standButton.style.display = "inline-block";
   hitButton.style.display = "inline-block";
+}
+//vezérl gobmbok elrejtése
+function HideButtons() {
+  standButton.style.display = "none";
+  hitButton.style.display = "none";
 }
 
 //funcion a pakli elllenőrézéshez
@@ -108,39 +157,45 @@ function DealingV2() {
 }
 function Round() {
   hitButton.setAttribute("disabled", "true");
-  standButton.style.display = "none";
-  hitButton.style.display = "none";
+  HideButtons();
   if (deck.some(CheckDeck)) {
     dealer[dealer.length] = DealingV2();
     dealerDiv.innerHTML += `<div>${
-      dealer.length == 1 ? dealer[dealer.length - 1] : ""
+      dealer.length == 1
+        ? dealer[dealer.length - 1]
+        : `<img src="shh.png" alt= "shhhh">`
     }</div>`;
-    // Wait(1);
-    console.log(dealer);
+    dealerValue += CardValue(dealer[dealer.length - 1]);
+    EndGame();
     player[player.length] = DealingV2();
     playerDiv.innerHTML += `<div>${player[player.length - 1]}</div>`;
-    // Wait(1);
-    console.log(player);
+    CardLayout();
     deckCOunt -= 2;
-    playerValue = CardValue(player.length - 1);
-    dealerValue = CardValue(dealer.length - 1);
+    playerValue += CardValue(player[player.length - 1]);
+
+    console.log(dealerValue);
+    console.log(playerValue);
+    console.log(dealer);
+    console.log(player);
   } else {
     console.log("Üres a pakli");
   }
 
-
-
-  EnableButtons();
+  ShowButtons();
   hitButton.removeAttribute("disabled", "true");
 
   deckDiv.innerHTML = deckCOunt;
   console.log(deck);
+  EndGame();
 }
+
+HideButtons();
 
 //start
 startButton.addEventListener("click", () => {
   startButton.style.display = "none";
-  EnableButtons();
+  GameReset();
+  ShowButtons();
 });
 
 //hit
