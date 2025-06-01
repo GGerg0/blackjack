@@ -1,32 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <link rel="stylesheet" href="style.css">
+<html lang="hu">
+  <head>
+    <link rel="stylesheet" href="style.css" />
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blackjack</title>
-</head>
+  </head>
 
-<body>
+  <body>
+    <img src="title.png" alt="Blackjack" id="title" />
     <div id="content">
-        <img src="title.png" alt="Blackjack" id="title">
-
-        <button id="start">start</button>
-
-        <p id="result-el"></p>
-        <div id="buttons">
-            <button id="hit-game-button">HIT</button>
-            <button id="stand-game-button">STAND</button>
-        </div>
-        <div id="dealer">
-
-        </div>
-        <div id="player"></div>
-        <div id="deck">56</div>
+      <button id="start">start</button>
+      <p id="result-el"></p>
+      <div id="buttons">
+        <button id="hit-game-button">HIT</button>
+        <button id="stand-game-button">STAND</button>
+      </div>
+      <div id="dealer"></div>
+      <div id="player"></div>
+      <div id="deck">56</div>
+      <div id="endresult"></div>
     </div>
-    <div id="endresult"></div>
 
     <script src="newBlackjackCode.js"></script>
-</body>
-
+  </body>
 </html>
