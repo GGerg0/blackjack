@@ -40,6 +40,26 @@ function CardValue(c) {
   }
 }
 
+
+
+function checkBust(value)
+{
+  if (value > 21)
+  {
+    return true
+  }
+  else{
+    return false
+  }
+}
+
+function endGame(){
+  if (checkBust(playerValue) || checkBust(dealerValue))
+  {
+
+  }
+}
+
 function EnableButtons() {
   standButton.style.display = "inline-block";
   hitButton.style.display = "inline-block";
@@ -108,8 +128,9 @@ function Round() {
     console.log("Üres a pakli");
   }
 
-  standButton.style.display = "inline-block";
-  hitButton.style.display = "inline-block";
+
+
+  EnableButtons();
   hitButton.removeAttribute("disabled", "true");
 
   deckDiv.innerHTML = deckCOunt;
