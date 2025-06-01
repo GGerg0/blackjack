@@ -18,6 +18,7 @@ let dealerValue = 0;
 let dealer = [];
 let player = [];
 let stand = false;
+resetButton.style.display = "none"
 
 //Egy kártya valós értéke
 function CardValue(c) {
@@ -52,6 +53,9 @@ function GameReset() {
   playerDiv.style.transform = `translate(0vw)`;
   playerDiv.innerHTML = ``;
   dealerDiv.innerHTML = ``;
+  resetButton.style.display = "none"
+  startButton.style.display = "inline-block"
+  deckDiv.innerHTML = deckCOunt;
 }
 
 //Kártya elrendezés
@@ -82,7 +86,7 @@ function EndGame() {
     HideButtons();
     EndDiv.style.display = "block";
     EndDiv.innerHTML = `<h1>Dealer nyert!</h1>`;
-    startButton.style.display = "inline-block";
+    resetButton.style.display = "inline-block";
     return true;
   }
 
@@ -90,20 +94,20 @@ function EndGame() {
     HideButtons();
     EndDiv.style.display = "block";
     EndDiv.innerHTML = `<h1>Játékos nyert!</h1>`;
-    startButton.style.display = "inline-block";
+    resetButton.style.display = "inline-block";
     return true;
   }
   if (stand == true && playerValue > dealerValue) {
     HideButtons();
     EndDiv.style.display = "block";
     EndDiv.innerHTML = `<h1>Játékos nyert!</h1>`;
-    startButton.style.display = "inline-block";
+    resetButton.style.display = "inline-block";
     return true;
   }
   if (stand == true && playerValue == dealerValue) {
     EndDiv.style.display = "block";
     EndDiv.innerHTML = `<h1>Döntetlen!</h1>`;
-    startButton.style.display = "inline-block";
+    resetButton.style.display = "inline-block";
     return true;
   }
   return false;
@@ -140,12 +144,16 @@ function Wait(sec) {
     date1 = new Date().getTime();
   }
 }
+//random szám
+function RandomNumber(max){
+  return parseInt(Math.floor(Math.random() * max))
+}
 
 //Kártya osztás egy embernek
 function DealingV2() {
-  let kartya = parseInt(Math.floor(Math.random() * 14));
+  let kartya = RandomNumber(14);
   while (deck[kartya] < 1) {
-    kartya = parseInt(Math.floor(Math.random() * 14));
+    kartya = RandomNumber(14);
   }
   deck[kartya] -= 1;
 
@@ -218,15 +226,11 @@ HideButtons();
 //start
 startButton.addEventListener("click", () => {
   startButton.style.display = "none";
-  GameReset();
   ShowButtons();
 
   PlayerDealing();
-  Wait(1);
   DealerDealing();
-  Wait(1);
   PlayerDealing();
-  Wait(1);
   DealerDealing();
 });
 
@@ -240,3 +244,6 @@ standButton.addEventListener("click", () => {
   DealerRound();
 });
 //reset
+resetButton.addEventListener("click", ()=> {
+  GameReset();
+})
