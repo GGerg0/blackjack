@@ -1,6 +1,3 @@
-// let typeOfCard = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-
-// let deck = [typeOfCard, typeOfCard, typeOfCard, typeOfCard];
 let deck = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4];
 
 console.log(deck);
@@ -14,6 +11,7 @@ const dealerDiv = document.getElementById("dealer");
 const EndDiv = document.getElementById("endresult");
 const content = document.querySelectorAll("#content>:not(#endresult)");
 const playerText = document.querySelector("#player~p");
+const resetButton = document.getElementById("reset");
 let playerValue = 0;
 let dealerValue = 0;
 
@@ -49,26 +47,25 @@ function GameReset() {
   dealerValue = 0;
   dealer = [];
   player = [];
+  stand = false;
   EndDiv.style.display = "none";
-  playerDiv.style.transform = `translate(0vw)`
-  playerDiv.innerHTML=``
-
+  playerDiv.style.transform = `translate(0vw)`;
+  playerDiv.innerHTML = ``;
+  dealerDiv.innerHTML = ``;
 }
 
 //Kártya elrendezés
-function CardLayout()
-{
-  const cards = document.querySelectorAll("#player>div")
-  let counter = 0
+function CardLayout() {
+  const cards = document.querySelectorAll("#player>div");
+  let counter = 0;
 
-  playerDiv.style.transform = `translate(-${(cards.length-1)/2*10}vw)`
+  playerDiv.style.transform = `translate(-${((cards.length - 1) / 2) * 10}vw)`;
 
-  cards.forEach(c => {
-    c.style.transform = `translate(${(counter)*10}vw)`
-    counter++
-  })
+  cards.forEach((c) => {
+    c.style.transform = `translate(${counter * 10}vw)`;
+    counter++;
+  });
 }
-
 
 //túllépés ellenőrzése
 function CheckBust(value) {
@@ -81,19 +78,35 @@ function CheckBust(value) {
 
 //Játék vége
 function EndGame() {
-  if (CheckBust(playerValue) || dealerDiv == 21) {
+  if (CheckBust(playerValue)) {
     HideButtons();
     EndDiv.style.display = "block";
     EndDiv.innerHTML = `<h1>Dealer nyert!</h1>`;
     startButton.style.display = "inline-block";
+    return true;
   }
 
-  if (CheckBust(dealerValue) || playerValue == 21) {
+  if (CheckBust(dealerValue)) {
     HideButtons();
     EndDiv.style.display = "block";
     EndDiv.innerHTML = `<h1>Játékos nyert!</h1>`;
     startButton.style.display = "inline-block";
+    return true;
   }
+  if (stand == true && playerValue > dealerValue) {
+    HideButtons();
+    EndDiv.style.display = "block";
+    EndDiv.innerHTML = `<h1>Játékos nyert!</h1>`;
+    startButton.style.display = "inline-block";
+    return true;
+  }
+  if (stand == true && playerValue == dealerValue) {
+    EndDiv.style.display = "block";
+    EndDiv.innerHTML = `<h1>Döntetlen!</h1>`;
+    startButton.style.display = "inline-block";
+    return true;
+  }
+  return false;
 }
 
 //játék elemek elrejtése
@@ -152,40 +165,51 @@ function DealingV2() {
     default:
       return kartya + 1;
   }
-
-  //egy kör functionje
 }
-function Round() {
-  hitButton.setAttribute("disabled", "true");
-  HideButtons();
-  if (deck.some(CheckDeck)) {
-    dealer[dealer.length] = DealingV2();
+
+//player kártyaosztás
+function PlayerDealing() {
+  player[player.length] = DealingV2();
+  playerDiv.innerHTML += `<div>${player[player.length - 1]}</div>`;
+  CardLayout();
+  deckCOunt -= 1;
+  playerValue += CardValue(player[player.length - 1]);
+  deckDiv.innerHTML = deckCOunt;
+}
+
+//dealer kártyaosztás
+function DealerDealing() {
+      dealer[dealer.length] = DealingV2();
     dealerDiv.innerHTML += `<div>${
       dealer.length == 1
         ? dealer[dealer.length - 1]
         : `<img src="shh.png" alt= "shhhh">`
     }</div>`;
     dealerValue += CardValue(dealer[dealer.length - 1]);
-    EndGame();
-    player[player.length] = DealingV2();
-    playerDiv.innerHTML += `<div>${player[player.length - 1]}</div>`;
-    CardLayout();
-    deckCOunt -= 2;
-    playerValue += CardValue(player[player.length - 1]);
+    deckCOunt -= 1;
+}
 
-    console.log(dealerValue);
+//egy kör functionje
+function PlayerRound() {
+  if (deck.some(CheckDeck)) {
+    PlayerDealing()
     console.log(playerValue);
-    console.log(dealer);
     console.log(player);
   } else {
     console.log("Üres a pakli");
   }
-
-  ShowButtons();
-  hitButton.removeAttribute("disabled", "true");
-
-  deckDiv.innerHTML = deckCOunt;
+  
   console.log(deck);
+  EndGame();
+}
+
+function DealerRound() {
+  while (dealerValue < 17) {
+    DealerDealing();
+    console.log(dealerValue);
+    console.log(dealer);
+  }
+  deckDiv.innerHTML = deckCOunt;
   EndGame();
 }
 
@@ -196,9 +220,23 @@ startButton.addEventListener("click", () => {
   startButton.style.display = "none";
   GameReset();
   ShowButtons();
+
+  PlayerDealing();
+  Wait(1);
+  DealerDealing();
+  Wait(1);
+  PlayerDealing();
+  Wait(1);
+  DealerDealing();
 });
 
 //hit
 hitButton.addEventListener("click", () => {
-  Round();
+  PlayerRound();
 });
+//stand
+standButton.addEventListener("click", () => {
+  stand = true;
+  DealerRound();
+});
+//reset
