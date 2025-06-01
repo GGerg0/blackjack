@@ -47,9 +47,15 @@ button {
   outline: white ridge 5px;
 }
 
+
 #start {
   left: 10vw;
   top: 50vh;
+  z-index: 10;
+}
+#reset {
+  left: 10vw;
+  top: 62vh;
   z-index: 10;
 }
 
