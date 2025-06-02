@@ -1,7 +1,7 @@
 let deck = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4];
 
 console.log(deck);
-let deckCOunt = 56;
+let deckCOunt = 52;
 const hitButton = document.getElementById("hit-game-button");
 const standButton = document.getElementById("stand-game-button");
 const deckDiv = document.getElementById("deck");
@@ -48,7 +48,7 @@ function CardValue(c) {
 //Alap értékek beállítása
 function GameReset() {
   deck = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4];
-  deckCOunt = 56;
+  deckCOunt = 52;
   playerValue = 0;
   dealerValue = 0;
   dealer = [];
@@ -157,27 +157,27 @@ function RandomNumber(max) {
 
 //Kártya osztás egy embernek
 function DealingV2() {
-  let kartya = RandomNumber(14);
+  let kartya = RandomNumber(13);
   while (deck[kartya] < 1) {
-    kartya = RandomNumber(14);
+    kartya = RandomNumber(13);
   }
   deck[kartya] -= 1;
 
   switch (kartya) {
-    case 10:
+    case 9:
       return "J";
       break;
-    case 11:
+    case 10:
       return "Q";
       break;
-    case 12:
+    case 11:
       return "K";
       break;
-    case 13:
+    case 12:
       return "A";
       break;
     default:
-      return kartya + 1;
+      return kartya + 2;
   }
 }
 
