@@ -4,6 +4,16 @@
   box-sizing: border-box;
 }
 
+p:first-child{
+  position: absolute;
+  left: 80vw;
+  bottom:20vh;
+  font-size: 35px;
+  background-color: aliceblue;
+  padding: 1%;
+  outline: lightgrey ridge 5px;
+}
+
 #content {
   height: 100vh;
   background-image: radial-gradient(rgb(0, 156, 2), rgb(2, 105, 3));

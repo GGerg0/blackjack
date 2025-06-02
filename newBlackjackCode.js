@@ -15,10 +15,14 @@ const resetButton = document.getElementById("reset");
 const APage = document.getElementById("ASelection");
 const AOneButton = document.querySelector("#ASelection>button:first-of-type");
 const ATenButton = document.querySelector("#ASelection>button:last-child");
+const scoreP = document.querySelector("p:first-child");
+let score = sessionStorage.getItem("score");
+
 
 let playerValue = 0;
 let dealerValue = 0;
 
+scoreP.innerHTML = `Győzelmek: ${sessionStorage.getItem("score") == null ? 0 : sessionStorage.getItem("score")}`
 let dealer = [];
 let player = [];
 let stand = false;
@@ -62,6 +66,7 @@ function GameReset() {
   startButton.style.display = "inline-block";
   deckDiv.innerHTML = deckCOunt;
   APage.style.display = "none";
+  
 }
 
 //Kártya elrendezés
@@ -101,6 +106,7 @@ function EndGame() {
     EndDiv.style.display = "block";
     EndDiv.innerHTML = `<h1>Játékos nyert!</h1>`;
     resetButton.style.display = "inline-block";
+    ScoreCounter();
     return true;
   }
   if (stand == true && playerValue > dealerValue) {
@@ -108,6 +114,7 @@ function EndGame() {
     EndDiv.style.display = "block";
     EndDiv.innerHTML = `<h1>Játékos nyert!</h1>`;
     resetButton.style.display = "inline-block";
+    ScoreCounter();
     return true;
   }
   if (stand == true && playerValue == dealerValue) {
@@ -117,6 +124,14 @@ function EndGame() {
     return true;
   }
   return false;
+}
+
+//session storage
+function ScoreCounter() {
+  score = Number(score) + 1;
+  sessionStorage.removeItem("score");
+  sessionStorage.setItem("score", score);
+  scoreP.innerHTML = `Győzelmek: ${sessionStorage.getItem("score") == null ? 0 : sessionStorage.getItem("score")}`
 }
 
 //játék elemek elrejtése
@@ -184,11 +199,11 @@ function DealingV2() {
 //player kártyaosztás
 function PlayerDealing() {
   player[player.length] = DealingV2();
-    playerDiv.innerHTML += `<div>${player[player.length - 1]}</div>`;
-    CardLayout();
-    deckCOunt -= 1;
-    playerValue += CardValue(player[player.length - 1]);
-    deckDiv.innerHTML = deckCOunt;
+  playerDiv.innerHTML += `<div>${player[player.length - 1]}</div>`;
+  CardLayout();
+  deckCOunt -= 1;
+  playerValue += CardValue(player[player.length - 1]);
+  deckDiv.innerHTML = deckCOunt;
 }
 
 //dealer kártyaosztás
@@ -239,6 +254,7 @@ startButton.addEventListener("click", () => {
   PlayerDealing();
   DealerDealing();
 });
+
 
 //hit
 hitButton.addEventListener("click", () => {
