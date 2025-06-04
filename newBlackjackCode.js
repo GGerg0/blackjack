@@ -216,6 +216,7 @@ function DealerDealing() {
   }</div>`;
   dealerValue += CardValue(dealer[dealer.length - 1]);
   deckCOunt -= 1;
+  deckDiv.innerHTML = deckCOunt;
 }
 
 //egy kör functionje
@@ -227,7 +228,6 @@ function PlayerRound() {
   } else {
     console.log("Üres a pakli");
   }
-
   console.log(deck);
   EndGame();
 }
